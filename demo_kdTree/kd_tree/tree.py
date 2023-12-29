@@ -98,7 +98,7 @@ class KdNode(KdData, NodeMixin):
                 result = temp
         if left_node is not None:
             temp = left_node.get_largest_in_axis(axis)
-            if temp.key is not None and temp.key[axis] < result.key[axis]:
+            if temp.key is not None and temp.key[axis] > result.key[axis]:
                 result = temp
         return result
 
