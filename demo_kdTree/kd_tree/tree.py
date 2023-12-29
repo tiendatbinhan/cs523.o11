@@ -77,18 +77,28 @@ class KdNode(KdData, NodeMixin):
     def get_smallest_in_axis(self, axis=0) -> NodeMixin:
         result = self
         left_node = self.get_left_node()
+        right_node = self.get_right_node()
         if self.axis == axis and left_node is not None:
             temp = left_node.get_smallest_in_axis(axis)
+            if temp.key is not None and temp.key[axis] < result.key[axis]:
+                result = temp
+        if right_node is not None:
+            temp = right_node.get_smallest_in_axis(axis)
             if temp.key is not None and temp.key[axis] < result.key[axis]:
                 result = temp
         return result
 
     def get_largest_in_axis(self, axis=0) -> NodeMixin:
         result = self
+        left_node = self.get_left_node()
         right_node = self.get_right_node()
         if self.axis == axis and right_node is not None:
-            temp = right_node.get_smallest_in_axis(axis)
+            temp = right_node.get_largest_in_axis(axis)
             if temp.key is not None and temp.key[axis] > result.key[axis]:
+                result = temp
+        if left_node is not None:
+            temp = left_node.get_largest_in_axis(axis)
+            if temp.key is not None and temp.key[axis] < result.key[axis]:
                 result = temp
         return result
 
